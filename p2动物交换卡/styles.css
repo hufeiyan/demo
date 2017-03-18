@@ -1,0 +1,49 @@
+/* 添加 CSS */
+body,p,ul,li{
+	margin:0;
+	padding:0;
+
+}
+li{
+	list-style: none;
+}
+h3{
+	padding: 20px 0;
+}
+
+h3,img,#content{
+	margin:0 15px;
+}
+img{
+	width:300px;
+	margin-bottom: 10px;
+}
+#card{
+	border: 1px solid #ccc;
+    width: 330px;
+    margin:20px 0 0 20px;
+    box-shadow: 8px 6px 5px #dedddd;
+}
+
+#content{
+	border:1px solid #ccc;
+	padding: 15px 10px;
+	margin-bottom: 15px;
+}
+#content p:first-child{
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+ul{
+	margin-bottom: 15px;
+}
+ul li{
+	font-size: 13px;
+}
+ul li span{
+	font-size: 14px;
+	font-weight: bold;
+}
+#content p:last-child{
+	font-size: 13px;
+}
