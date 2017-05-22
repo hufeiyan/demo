@@ -24,7 +24,7 @@ var bio = {
 		var email = HTMLemail.replace("%data%", bio.contacts.email);
 		var github = HTMLgithub.replace("%data%", bio.contacts.github);
 		var address = HTMLlocation.replace("%data%", bio.contacts.location);
-		$("#topContacts").append(mobile + email + github + address);
+		$("#topContacts,#footerContacts").append(mobile + email + github + address);
 
 		var bioPic = HTMLbioPic.replace("%data%", bio.biopic);
 		var welcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
@@ -42,15 +42,17 @@ var education = {
 			name: '浙江大学',
 	        location: '杭州',
 	        degree: '硕士',
-	        majors: '移动互联网与游戏开发',
-	        dates: '2015-2017'
+	        majors: ['移动互联网与游戏开发'],
+	        dates: '2015-2017',
+			url:'http://www.zju.edu.cn'
 		},
 		{
 			name: '浙江大学宁波理工学院',
 	        location: '宁波',
 	        degree: '大学',
-	        majors: '软件工程',
-	        dates: '2010-2014'
+	        majors: ['软件工程'],
+	        dates: '2010-2014',
+            url:'http://www.nit.net.cn/'
 	    }],
     
     onlineCourses: {
@@ -68,8 +70,13 @@ var education = {
 			var schoolDegree = HTMLschoolDegree.replace("%data%", education.schools[i].degree);
 			var schoolDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
 			var schoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);
-			var schoolMajor = HTMLschoolMajor.replace("%data%", education.schools[i].majors);
-			$(".education-entry:first").append(schoolName +schoolDegree + schoolDates + schoolLocation + schoolMajor);
+            var schoolURL = HTMLschoolURL.replace("%data%", education.schools[i].url);
+            var schoolMajor = ''
+            education.schools[i].majors.forEach(function(val) {
+                schoolMajor += HTMLschoolMajor.replace("%data%", val);
+            });
+
+			$(".education-entry:first").append(schoolName +schoolDegree + schoolDates + schoolLocation + schoolMajor + schoolURL);
      	}
 		
 
@@ -106,7 +113,7 @@ var work = {
     }
 }
 
-var project = {
+var projects = {
 	projects: [{
 		title: 'vip独家追踪' ,
         dates: '2016',
@@ -116,11 +123,11 @@ var project = {
            
     display: function(){
     	$("#projects").append(HTMLprojectStart);
-    	for(var i = 0,length = project.projects.length; i < length; i ++){
-	    	var projectTitle = HTMLprojectTitle.replace("%data%", project.projects[i].title);
-			var projectDates = HTMLprojectDates.replace("%data%", project.projects[i].dates);
-			var projectImages = HTMLprojectImage.replace("%data%", project.projects[i].images);
-			var projectDescription = HTMLprojectDescription.replace("%data%",project.projects[i].description );
+    	for(var i = 0,length = projects.projects.length; i < length; i ++){
+	    	var projectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title);
+			var projectDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
+			var projectImages = HTMLprojectImage.replace("%data%", projects.projects[i].images);
+			var projectDescription = HTMLprojectDescription.replace("%data%",projects.projects[i].description );
 			$(".project-entry").append(projectTitle +projectDates + projectDescription + projectImages);
 		}
     }
@@ -133,7 +140,7 @@ bio.display();
 work.display();
 
 //projects
-project.display();
+projects.display();
 
 //education
 education.display();
