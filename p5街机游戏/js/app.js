@@ -17,7 +17,7 @@ Enemy.prototype.update = function(dt) {
     // 都是以同样的速度运行的
      this.x += this.speed * dt;
      if(this.x >505){
-        this.x = 0;
+        this.x = -100;
         this.y = random();
      }
 
@@ -33,12 +33,6 @@ Enemy.prototype.render = function() {
     }
 };
 
-Enemy.prototype.getPosition = function() {
-    return {
-        x: this.x,
-        y: this.y
-    };
-}
 Enemy.prototype.checkCollsion = function(p,e){
 
     for(var i = e.length - 1;i>= 0;i--){       
@@ -71,7 +65,10 @@ Player.prototype = Object.create(Enemy.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function(){
-    return true;
+    if(this.y < 0){
+        alert("恭喜你闯关成功");
+        player.reset();
+    }
 }
 
 Player.prototype.reset = function(){
@@ -82,7 +79,7 @@ Player.prototype.reset = function(){
 Player.prototype.handleInput = function(dirction){
     switch(dirction){
         case 'up':
-            this.y = this.y < 50? this.y : this.y - 85;
+            this.y -=85;             
             break;        
 
         case 'down':
@@ -112,11 +109,11 @@ var arr = [60,145,228];
 var player = new Player(200, 380,'images/char-boy.png');
 
 
-var enemy1 = new Enemy(0, random(),EnemyImg,200);
-var enemy2 = new Enemy(0, random(),EnemyImg,120);
-var enemy3 = new Enemy(0, random(),EnemyImg,100);
-var enemy4 = new Enemy(0, random(),EnemyImg,80);
-var enemy5 = new Enemy(0, random(),EnemyImg,180);
+var enemy1 = new Enemy(-100, random(),EnemyImg,350);
+var enemy2 = new Enemy(-100, random(),EnemyImg,150);
+var enemy3 = new Enemy(-100, random(),EnemyImg,200);
+var enemy4 = new Enemy(-100, random(),EnemyImg,80);
+var enemy5 = new Enemy(-100, random(),EnemyImg,250);
 
 var allEnemies = [enemy1, enemy2, enemy3,enemy4,enemy5];
 
