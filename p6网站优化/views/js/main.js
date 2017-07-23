@@ -522,8 +522,8 @@ window.addEventListener('scroll', updatePositions);
 
 // 当页面加载时生成披萨滑窗
 document.addEventListener('DOMContentLoaded', function() {
-  var cols = 6;
-  var s = 200;  
+  var cols = 8;
+  var s = 256;  
   for (var i = 0; i < 25; i++) {   
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.height = "100px";
     elem.style.width = "73.333px"; 
     elem.basicLeft = (i % cols) * s;
-    elem.style.top = (i * 100) + 'px';
+    elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
