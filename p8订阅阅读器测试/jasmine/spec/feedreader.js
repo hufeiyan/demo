@@ -26,10 +26,7 @@ $(function() {
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有链接字段而且链接不是空的。
          */
         it('url are defined', function() {
-            for(var i=0,length=allFeeds.length;i<length;i++){
-                expect(allFeeds[i].url).toBeDefined();
-                expect(allFeeds[i].url.length).not.toBe(0);
-            }
+            checkDefined("url")
             
         });
 
@@ -38,12 +35,16 @@ $(function() {
          * 编写一个测试遍历 allFeeds 对象里面的所有的源来保证有名字字段而且不是空的。
          */
          it('name are defined', function() {
-            for(var i=0,length=allFeeds.length;i<length;i++){
-                expect(allFeeds[i].name).toBeDefined();
-                expect(allFeeds[i].name.length).not.toBe(0);
-            }
+            checkDefined("name")
             
         });
+
+         function checkDefined(str){
+            $.each(allFeeds,function(k,v){
+                expect(v[str]).toBeDefined();
+                expect(v[str].length).not.toBe(0);
+            })
+         }
     });
 
     
@@ -60,20 +61,33 @@ $(function() {
           * 再次点击的时候是否隐藏。
           */
 
-    describe('The Menu', function(){
-        it('menu should be hidden', function(){
+    describe('The menu', function(){
+        var menuIcon = $('.menu-icon-link'),
+            menu_hidden = $('body').hasClass('menu-hidden');
+
+        //第一个it也会触发beforeEach中的函数，因此先在执行之前触发一次
+        menuIcon.trigger("click");
+
+        beforeEach(function(){
+            menuIcon.trigger("click");
+        });
+
+        it('menu should be hidden', function(done){
             expect(menu_hidden).toEqual(true);
+            done();
+        });
+
+        it('menu should be show', function(done){
+            expect($('body').hasClass('menu-hidden')).toEqual(false);
+            done();
         });
 
 
-        it('menu should be show', function(){
-            expect(isShow).toEqual(true);
+        it('menu should be hidden', function(done){
+            expect($('body').hasClass('menu-hidden')).toEqual(true);
+            done();
         });
 
-        it('menu should be hidden', function(){
-            expect(isHidden).toEqual(true);
-        });
-        
         
     });
 
@@ -88,10 +102,10 @@ $(function() {
          */
     describe('Initial Entries', function(){
         beforeEach(function(done){
-            done();
+            loadFeed(0, done);
         });
 
-        it('loadFeed is done', function(done){
+        it('loadFeed is done', function(){
              expect($('.entry').length).not.toBe(0);
         })
 
@@ -105,15 +119,21 @@ $(function() {
          */
 
     describe('New Feed Selection', function(){
-        beforeEach(function(done){
-            load(changesFeeds);
-            done();
+        var before, after;
+        beforeEach(function(done){ 
+            loadFeed(1,function(){
+                before = $(".entry").eq(0).text();
+                done();
+            });
+            loadFeed(0, function(){
+                after = $(".entry").eq(0).text();
+                done();
+            })
         });
 
-        it('loadFeed is change', function(done){
-             expect($('.entry').length).toBe(1);
+        it('loadFeed is change', function(){
+            expect(before).not.toBe(after); 
         })
-
         
     });
 }());
