@@ -1,51 +1,109 @@
-html,
-body,ul{ 
+*{
+	margin: 0;
+	padding: 0;
+}
+html,body{
 	font-family: Arial, sans-serif;
     height: 100%;
-    margin: 0;
-    padding: 0;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 .container {
 	height: 100%;
-	position: relative;
+	display: flex;
+	color: #fff;
 }
+
+.options-box {
+	flex:1;
+	background: black;
+}
+.options{
+	display: none!important;
+}
+.optionShow{
+	position: absolute;
+	z-index: 9999;
+	height: 300px;
+}
+
 .searchBox{
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
-}
-.searchBox span{
-	display: inline-block;
-    padding-right: 10px;
+	border-right: 1px solid #ccc;
+	display: flex;
+	align-items: center;
+	background: #fff;
 }
 .searchBox input {
 	font-size: 12px;
-	width: 80%;
 	border: none;
 	height: 30px;
     border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	flex: 4;
+}
+.searchBox button{
+	border: none;
+	outline: none;
+	background: #4691ee;
+    flex: 1;
+    height: 30px;
+    color: #fff;
+}
+.options-box p{
+	height: 50px;
+	line-height: 50px;
+	padding-left: 15px;
+
 }
 .optionList{
 	list-style: none;
-	width: 30%;
 }
 .optionList li{
-	width: 100%;
 	height: 20px;
 	border-bottom: 1px solid #ccc;
 	border-right: 1px solid #ccc;
 	padding: 10px 0 10px 10px;
+	font-size: 14px;
 
 }
-#map {
-	bottom:0px;
+.map-box {
+	flex:3;
+}
+.mapTop{
+	display: block!important;
+}
+.topShow{
+	display: block!important;
+	text-align: right;
+	padding-right: 15px;
+}
+#map{
 	height: 100%;
-	position: absolute;
-	right: 0px;
-	left: 33%;
+	color: black;
+}
+.link{
+	display: none;
+	height: 50px;
+	line-height: 50px;
+	padding-left: 15px;
+	background-color: #1c1c1c;
+}
+.link a{
+	display: inline-block;
+	background: url(../images/Category.png) no-repeat;
+	width: 30px;
+	height: 30px;
+	background-size: 100% 100%;
+	margin-top: 10px;
 }
 
-.options-box {
-	width: 100%;
-    position: relative;
-    height: 100%;
+/* @media screen and (max-width: 800px){
+	.link{
+		display: block;
+	}
+	.options-box{
+		display: none;
+	}
 }
+ */
