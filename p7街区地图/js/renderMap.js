@@ -23,7 +23,7 @@ function renderMap() {
                     title: title,
                     offset: new AMap.Pixel(-12, -36)
                 });
-                marker.content = '我是' + title;
+                marker.content = title;
                 marker.on('click', markerClick);
                 marker.setAnimation('AMAP_ANIMATION_DROP');
                 markers.push(marker);
@@ -35,7 +35,30 @@ function renderMap() {
         handleClick(e.target);
     }
 
-    function handleClick(marker) {
+    function handleClick(marker) {     
+      $.ajax({
+        url: `http://restapi.amap.com/v3/geocode/regeo?location=${marker.G.position.lng},${marker.G.position.lat}&key=482dc01ee7351ad6252bd2b5871e2ee6`,
+        type: 'GET',
+        success: function(data){
+          console.log('query location', data);
+          var adcode = data.regeocode.addressComponent.adcode;
+          $.ajax({
+            url: `http://restapi.amap.com/v3/weather/weatherInfo?key=482dc01ee7351ad6252bd2b5871e2ee6&city=${adcode}`,
+            type: 'GET',
+            success:function(data){
+              infoWindow.setContent(getWeatherContent(data.lives[0]));
+              infoWindow.open(map, marker.getPosition());
+            },
+            error:function(data) {
+              console.log("获取天气信息失败");
+            }
+          });
+        },
+        error:function(data) {
+          console.log("获取地区信息失败");
+        }
+      })
+
         marker.setAnimation('AMAP_ANIMATION_BOUNCE');
         // 约 2 秒钟后停止动画
         window.setTimeout(function() {
@@ -76,13 +99,24 @@ function renderMap() {
 
     //显示标记信息
     showPointInfo = function(point) {
+      console.log('into showPointInfo', markers);
         if (point && point.name) {
             var clickedMarker = markers.filter((e) => {
-                return e.content === "我是" + point.name;
+                return e.content === point.name;
             })[0];
             handleClick(clickedMarker);
             map.setFitView();
         }
+    }
+
+    function getWeatherContent(weatherObj){
+      console.log('weatherObj',weatherObj);
+      return `<div>所属地区：${weatherObj.province}-${weatherObj.city}</div>
+              <div>天气：${weatherObj.weather}</div>
+              <div>湿度：${weatherObj.humidity}</div>
+              <div>气温：${weatherObj.temperature}</div>
+              <div>更新时间：${weatherObj.reporttime}</div>
+              `
     }
 
 }
